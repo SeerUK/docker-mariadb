@@ -26,6 +26,8 @@ RUN \
     apt-get autoremove && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
+    rm -rf /var/lib/mysql && \
+    mkdir -p /var/lib/mysql && \
     chown -R mysql: /var/lib/mysql && \
     chmod +x /docker-entrypoint.sh
 
