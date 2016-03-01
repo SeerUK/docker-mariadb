@@ -49,7 +49,14 @@ else
     echo "==> Using an existing volume of MariaDB"
 fi
 
-usermod -u ${MARIADB_UID} mysql
+SYSTEM_UID=${MARIADB_UID:-"1000"}
+SYSTEM_UID_TYPE=$( [ ${MARIADB_UID} ] && echo "preset" || echo "default" )
+
+echo "==> Updating mysql system user's ID to ${SYSTEM_UID} (${SYSTEM_UID_TYPE})"
+usermod -u ${SYSTEM_UID} mysql > /dev/null 2>&1 &
+
+echo "==> Updating ownership of data directory"
 chown -R mysql /var/lib/mysql
 
+echo "==> Starting MariaDB"
 exec mysqld_safe
