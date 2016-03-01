@@ -1,6 +1,7 @@
 FROM ubuntu:trusty
 MAINTAINER Elliot Wright <elliot@elliotwright.co>
 
+ENV MARIADB_UID 1000
 ENV MARIADB_DATABASE docker
 ENV MARIADB_USER docker
 ENV MARIADB_PASS docker

@@ -2,8 +2,8 @@
 
 DATA_HOME="/var/lib/mysql"
 
-if [[ ! -d "$DATA_HOME/mysql" ]]; then
-    echo "==> An empty or uninitialized MariaDB installation is detected in '$DATA_HOME'"
+if [[ ! -d "${DATA_HOME}/mysql" ]]; then
+    echo "==> An empty or uninitialized MariaDB installation is detected in '${DATA_HOME}'"
     echo "==> Installing MariaDB data..."
     mysql_install_db > /dev/null 2>&1
     echo "==> Done!"
@@ -30,7 +30,7 @@ if [[ ! -d "$DATA_HOME/mysql" ]]; then
 
     echo "==> Done!"
 
-    if [[ ! -z "$MARIADB_DATABASE" ]]; then
+    if [[ ! -z "${MARIADB_DATABASE}" ]]; then
         echo "==> Creating database '${MARIADB_DATABASE}'"
         mysql -uroot -e "CREATE DATABASE ${MARIADB_DATABASE} CHARACTER SET utf8"
         echo "==> Done!"
@@ -48,5 +48,8 @@ if [[ ! -d "$DATA_HOME/mysql" ]]; then
 else
     echo "==> Using an existing volume of MariaDB"
 fi
+
+usermod -u ${MARIADB_UID} mysql
+chown -R mysql /var/lib/mysql
 
 exec mysqld_safe
