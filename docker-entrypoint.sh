@@ -13,6 +13,7 @@ echo "==> Updating ownership of data directory (${DATA_HOME})"
 chown -R mysql "${DATA_HOME}"
 
 echo "==> Updating ownership of run directory (${RUN_HOME})"
+mkdir -p "${RUN_HOME}"
 chown -R mysql "${RUN_HOME}"
 
 if [[ ! -d "${DATA_HOME}/mysql" ]]; then
