@@ -1,6 +1,7 @@
 #!/bin/bash
 
 DATA_HOME="/var/lib/mysql"
+RUN_HOME="/var/run/mysql"
 
 SYSTEM_UID=${MARIADB_UID:-"1000"}
 SYSTEM_UID_TYPE=$( [ ${MARIADB_UID} ] && echo "preset" || echo "default" )
@@ -8,8 +9,11 @@ SYSTEM_UID_TYPE=$( [ ${MARIADB_UID} ] && echo "preset" || echo "default" )
 echo "==> Updating mysql system user's ID to ${SYSTEM_UID} (${SYSTEM_UID_TYPE})"
 usermod -u ${SYSTEM_UID} mysql > /dev/null 2>&1 &
 
-echo "==> Updating ownership of data directory"
-chown -R mysql /var/lib/mysql
+echo "==> Updating ownership of data directory (${DATA_HOME})"
+chown -R mysql "${DATA_HOME}"
+
+echo "==> Updating ownership of run directory (${RUN_HOME})"
+chown -R mysql "${RUN_HOME}""
 
 if [[ ! -d "${DATA_HOME}/mysql" ]]; then
     echo "==> An empty or uninitialized MariaDB installation is detected in '${DATA_HOME}'"
