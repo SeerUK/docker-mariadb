@@ -13,7 +13,7 @@ echo "==> Updating ownership of data directory (${DATA_HOME})"
 chown -R mysql "${DATA_HOME}"
 
 echo "==> Updating ownership of run directory (${RUN_HOME})"
-chown -R mysql "${RUN_HOME}""
+chown -R mysql "${RUN_HOME}"
 
 if [[ ! -d "${DATA_HOME}/mysql" ]]; then
     echo "==> An empty or uninitialized MariaDB installation is detected in '${DATA_HOME}'"
