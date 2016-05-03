@@ -1,15 +1,16 @@
 #!/bin/bash
 
 DATA_HOME="/var/lib/mysql"
-RUN_HOME="/var/run/mysql"
+RUN_HOME="/var/run/mysqld"
 
 SYSTEM_UID=${MARIADB_UID:-"1000"}
 SYSTEM_UID_TYPE=$( [ ${MARIADB_UID} ] && echo "preset" || echo "default" )
 
 echo "==> Updating mysql system user's ID to ${SYSTEM_UID} (${SYSTEM_UID_TYPE})"
-usermod -u ${SYSTEM_UID} mysql > /dev/null 2>&1 &
+usermod -u ${SYSTEM_UID} mysql > /dev/null 2>&1
 
 echo "==> Updating ownership of data directory (${DATA_HOME})"
+mkdir -p "${DATA_HOME}"
 chown -R mysql "${DATA_HOME}"
 
 echo "==> Updating ownership of run directory (${RUN_HOME})"
